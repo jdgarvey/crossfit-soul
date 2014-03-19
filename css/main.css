@@ -1,0 +1,45 @@
+body { 
+	font-family: 'digital-7_monomono', Arial, sans-serif; 
+	background-color: black;
+	color: white;
+}
+#judges {
+	padding-left: 50px;
+}
+#judges div {
+	padding: 5px 5px 0;
+}
+#judges h4 {
+	margin-bottom: 0;
+}
+#contestant {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.content {
+	width: 45%;
+}
+
+#bottom-row {
+	position: relative;
+}
+
+
+/* Helpers */
+.header-margin {
+	margin-top: 10px;
+}
+.header-line-height {
+	line-height: 0.7;
+}
+.huge {
+	font-size: 800%;
+	margin-top: 30px;
+}
+.upper-case {
+	text-transform: uppercase;
+}
+.gold {
+	color: #ffd700;
+}
