@@ -1,8 +1,12 @@
 body { 
-	font-family: 'digital-7_monomono', Arial, sans-serif; 
 	background-color: black;
 	color: white;
 }
+
+#board {
+    font-family: 'digital-7_monomono', Arial, sans-serif;
+}
+
 #judges {
 	padding-left: 50px;
 }
@@ -21,10 +25,13 @@ body {
 	width: 560px;
 }
 
+.admin {
+    margin: 20px;
+}
+
 #bottom-row {
 	position: relative;
 }
-
 
 /* Helpers */
 .header-margin {

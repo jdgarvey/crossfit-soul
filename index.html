@@ -1,63 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+<html lang="en" ng-app="olyLift">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>OlyLift</title>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/fonts.css" type="text/css" charset="utf-8" />
-    <link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8" />
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/fonts.css" type="text/css" charset="utf-8"/>
+        <link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="container content upper-case">
-      <div class="row">
-        <div class="col-lg-5 text-center">
-          <h1>WEIGHT</h1>
-          <h1 class="header-margin">95 KGS</h1>
-          <h1 class="header-margin">215 LBS</h1>
-        </div>
-        <div class="col-lg-7 text-center">
-          <h1 class="huge header-line-height">02&#58;00</h1>
-          <h3 class="gold header-margin">ATTEMPT 2</h3>
-          <h3 class="header-margin header-line-height">CLEAN &amp; JERK</h3>
-        </div>
-      </div>
-      <div id="bottom-row" class="row">
-        <div id="judges" class="col-lg-6 text-center">
-          <div class="col-lg-4">
-            <img src="images/muscle-man.png">
-            <h4 class="upper-case">JUDGE 1</h4>
-          </div>
-          <div class="col-lg-4">
-            <img src="images/muscle-man.png">
-            <h4 class="upper-case">JUDGE 2</h4>
-          </div>
-          <div class="col-lg-4">
-            <img src="images/muscle-man-red.png">
-            <h4 class="upper-case">JUDGE 3</h4>
-          </div>
-        </div>
-        <div id="contestant" class="col-lg-6">
-          <div class="pull-right text-center">DANNY LOPEZ CALLEGA <br/>
-            <span class="gold ">MEN 94 KILOS</span> <br/>
-            <span class="">CROSSFIT SOUL</span> 
-          </div>
-        </div>
-      </div>
-    </div>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body ng-controller="MainCtrl">
+        <div id="board" class="container content">
+            <div class="row">
+                <div class="col-lg-5 text-center">
+                    <h1>WEIGHT</h1>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+                    <h1 class="header-margin">{{convertLBStoKG(lift.weight)}} KGS</h1>
 
-  </body>
+                    <h1 class="header-margin">{{lift.weight}} LBS</h1>
+                </div>
+                <div class="col-lg-7 text-center">
+                    <h1 class="huge header-line-height">{{getRemainingMinutes(countDown)}}&#58;{{getRemainingSeconds(countDown)}}</h1>
+
+                    <h3 class="gold header-margin">ATTEMPT {{lift.attempt}}</h3>
+
+                    <h3 class="header-margin header-line-height">{{lift.movement}}</h3>
+                </div>
+            </div>
+            <div id="bottom-row" class="row">
+                <div id="judges" class="col-lg-6 text-center">
+                    <div class="col-lg-4">
+                        <img ng-if="lift.judge01" src="images/muscle-man.png">
+                        <img ng-if="!lift.judge01" src="images/muscle-man-red.png">
+                        <h4>JUDGE 1</h4>
+                    </div>
+                    <div class="col-lg-4">
+                        <img ng-if="lift.judge02" src="images/muscle-man.png">
+                        <img ng-if="!lift.judge02" src="images/muscle-man-red.png">
+                        <h4>JUDGE 2</h4>
+                    </div>
+                    <div class="col-lg-4">
+                        <img ng-if="lift.judge03" src="images/muscle-man.png">
+                        <img ng-if="!lift.judge03" src="images/muscle-man-red.png">
+                        <h4>JUDGE 3</h4>
+                    </div>
+                </div>
+                <div id="contestant" class="col-lg-6">
+                    <div class="pull-right text-center">{{lift.athlete}} <br/>
+                        <span class="gold ">{{lift.division}}</span> <br/>
+                        <span class="">{{lift.affiliate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+        <script src="https://cdn.firebase.com/js/client/1.0.5/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.js"></script>
+        <script src="libs/ui-bootstrap-tpls-0.10.0.min.js"></script>
+
+        <script src="js/app.js"></script>
+    </body>
 </html>
