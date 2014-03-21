@@ -27,15 +27,18 @@
     <div class="container">
         <h1>OlyLift Admin</h1>
 
-        <form class="form-horizontal" role="form" novalidate ng-submit="updateLift()">
+        <form class="form-inline" role="form" novalidate ng-submit="updateTimer()">
             <div class="form-group">
                 <label for="timer" class="col-sm-2 control-label">Timer</label>
 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="timer" placeholder="Timer" ng-model="lift.timer">
+                    <input type="text" class="form-control" id="timer" placeholder="Timer" ng-model="timer.time" ng-blur="updateTimer()">
+                    <button type="button" class="btn btn-primary" ng-click="toggleTimer()">Start</button>
                 </div>
             </div>
             <hr/>
+        </form>
+        <form class="form-horizontal" role="form" novalidate ng-submit="updateLift()">
             <div class="form-group">
                 <label for="division" class="col-sm-2 control-label">Division</label>
 

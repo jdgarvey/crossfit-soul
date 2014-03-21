@@ -1,6 +1,6 @@
 var app = angular.module('olyLift', ['firebase', 'ui.bootstrap']);
 
-app.constant('FIREBASE_URI', 'https://olylift.firebaseio.com/lift');
+app.constant('FIREBASE_URI', 'https://olylift.firebaseio.com/');
 
 app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService) {
     $scope.convertLBStoKG = function (lbs) {
@@ -9,6 +9,22 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
 
     $scope.updateLift = function () {
         LiftService.updateLift();
+    };
+
+    $scope.updateTimer = function () {
+        TimerService.updateTimer();
+    };
+
+    $scope.startTimer = function () {
+        TimerService.start();
+    };
+
+    $scope.pauseTimer = function () {
+        TimerService.pause();
+    };
+
+    $scope.toggleTimer = function () {
+        TimerService.toggle();
     };
 
     var padNumber = function (nr, n, str) {
@@ -26,23 +42,17 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
         return padNumber(seconds, 2);
     };
 
-    $scope.countDown = 0;
-    $scope.lift = {};
-
-    $scope.$on('timerTick', function() {
-        $scope.countDown = TimerService.getCountdown();
-    });
-
-    $scope.$on('liftLoaded',function() {
+    $scope.$on('liftLoaded', function () {
         $scope.lift = LiftService.getLift();
-        TimerService.setCountdown(parseInt($scope.lift.timer, 10));
-        TimerService.start();
+        $scope.timer = TimerService.getTimer();
     });
 });
 
-app.factory('TimerService', function ($rootScope, $timeout) {
-    var isPaused = false,
-        countDown = 120,
+app.factory('TimerService', function ($rootScope, $timeout, $firebase, FIREBASE_URI) {
+    var timer = $firebase(new Firebase(FIREBASE_URI + 'timer'));
+
+    var loaded = false,
+        isPaused = false,
         pause = function () {
             isPaused = true;
         },
@@ -52,9 +62,10 @@ app.factory('TimerService', function ($rootScope, $timeout) {
         },
         start = function () {
             if (isPaused) return;
-            countDown -= 1;
-            $rootScope.$broadcast('timerTick', countDown);
-            if (countDown > 0) {
+            timer.time -= 1;
+            timer.$save();
+
+            if (timer.time > 0) {
                 $timeout(start, 1000);
             }
         },
@@ -62,16 +73,16 @@ app.factory('TimerService', function ($rootScope, $timeout) {
             isPaused = !isPaused;
             start();
         },
-        setCountdown = function (count) {
-            countDown = count;
+        updateTimer = function (t) {
+            timer.$save();
         },
-        getCountdown = function () {
-            return countDown;
+        getTimer = function () {
+            return timer;
         };
-    
+
     return {
-        setCountdown: setCountdown,
-        getCountdown: getCountdown,
+        getTimer: getTimer,
+        updateTimer: updateTimer,
         pause: pause,
         resume: resume,
         start: start,
@@ -80,9 +91,9 @@ app.factory('TimerService', function ($rootScope, $timeout) {
 });
 
 app.factory('LiftService', function ($rootScope, $firebase, FIREBASE_URI) {
-    var lift = $firebase(new Firebase(FIREBASE_URI));
+    var lift = $firebase(new Firebase(FIREBASE_URI + 'lift'));
 
-    lift.$on('loaded', function(){
+    lift.$on('loaded', function () {
         $rootScope.$broadcast('liftLoaded');
     });
 
