@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="olyLift">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OlyLift</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="css/fonts.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-controller="MainCtrl">
+    <div class="container">
+        <h1>OlyLift Judge</h1>
+        <div class="form-group">
+            <select class="form-control" ng-model="judge" ng-options="judge.name for judge in judges">
+
+            </select>
+        </div>
+        <form role="form" novalidate ng-show="judge">
+            <div class="form-group">
+                <button type="button" class="btn btn-success btn-lg btn-block" ng-click="approveLift(judge, true)">Approve</button>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="approveLift(judge, false)">Reject</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.5/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.js"></script>
+    <script src="libs/ui-bootstrap-tpls-0.10.0.min.js"></script>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

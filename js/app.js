@@ -3,6 +3,19 @@ var app = angular.module('olyLift', ['firebase', 'ui.bootstrap']);
 app.constant('FIREBASE_URI', 'https://olylift.firebaseio.com/');
 
 app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService) {
+    $scope.judges = [
+        {name:'Judge One', value:'judge01'},
+        {name:'Judge Two', value:'judge02'},
+        {name:'Judge Three', value:'judge03'}
+    ];
+
+    $scope.judge = $scope.judges[0];
+
+    $scope.approveLift = function (judge, approved) {
+        $scope.lift[judge.value] = approved;
+        $scope.updateLift();
+    };
+
     $scope.convertLBStoKG = function (lbs) {
         return Math.floor(lbs * 0.453592);
     };
@@ -13,6 +26,10 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
 
     $scope.updateTimer = function () {
         TimerService.updateTimer();
+    };
+
+    $scope.isPaused = function () {
+        return TimerService.isTimerPaused();
     };
 
     $scope.startTimer = function () {
@@ -51,8 +68,7 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
 app.factory('TimerService', function ($rootScope, $timeout, $firebase, FIREBASE_URI) {
     var timer = $firebase(new Firebase(FIREBASE_URI + 'timer'));
 
-    var loaded = false,
-        isPaused = false,
+    var isPaused = true,
         pause = function () {
             isPaused = true;
         },
@@ -78,6 +94,9 @@ app.factory('TimerService', function ($rootScope, $timeout, $firebase, FIREBASE_
         },
         getTimer = function () {
             return timer;
+        },
+        isTimerPaused = function() {
+            return isPaused;
         };
 
     return {
@@ -86,7 +105,8 @@ app.factory('TimerService', function ($rootScope, $timeout, $firebase, FIREBASE_
         pause: pause,
         resume: resume,
         start: start,
-        toggle: toggle
+        toggle: toggle,
+        isTimerPaused: isTimerPaused
     }
 });
 
