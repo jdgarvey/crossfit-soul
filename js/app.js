@@ -130,3 +130,11 @@ app.factory('LiftService', function ($rootScope, $firebase, FIREBASE_URI) {
         updateLift: updateLift
     }
 });
+
+// Hack for viewport-reliant font-size on Chrome
+
+resetElements = $("h1, h2, h3, h4, h5");
+
+$(window).resize(function() {
+  resetElements.css("z-index", 1);
+});
