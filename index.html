@@ -23,7 +23,7 @@
     <body ng-cloak ng-controller="MainCtrl">
         <div id="board" class="container-fluid content">
             <div class="row">
-                <div class="col-sm-5 text-center">
+                <div class="col-xs-5 text-center">
                     <div class="col-sm-7">
                         <h1>WEIGHT</h1>
                     
@@ -32,7 +32,7 @@
                         <h1 class="header-margin">{{lift.weight}} LBS</h1>
                     </div>
                 </div>
-                <div class="col-sm-7 text-center">
+                <div class="col-xs-7 text-center">
                     <h1 class="huge header-line-height">{{getRemainingMinutes(timer.time)}}&#58;{{getRemainingSeconds(timer.time)}}</h1>
 
                     <h3 class="gold header-margin">ATTEMPT {{lift.attempt}}</h3>
@@ -42,23 +42,23 @@
             </div>
             <div id="bottom-row" class="row">
                 <div id="judges" class="col-sm-6 text-center">
-                    <div class="col-sm-4">
+                    <div class="col-xs-4">
                         <img ng-if="lift.judge01" src="images/judge-approve.svg">
                         <img ng-if="!lift.judge01" src="images/judge-reject.svg">
                         <h4>JUDGE 1</h4>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-xs-4">
                         <img ng-if="lift.judge02" src="images/judge-approve.svg">
                         <img ng-if="!lift.judge02" src="images/judge-reject.svg">
                         <h4>JUDGE 2</h4>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-xs-4">
                         <img ng-if="lift.judge03" src="images/judge-approve.svg">
                         <img ng-if="!lift.judge03" src="images/judge-reject.svg">
                         <h4>JUDGE 3</h4>
                     </div>
                 </div>
-                <div id="contestant" class="col-sm-6">
+                <div id="contestant" class="col-sm-6 col-xs-12">
                     <div class="col-sm-6 text-center pull-right">
                         <h5>{{lift.athlete}}</h5>
                         <h5 class="gold">{{lift.division}}</h5>

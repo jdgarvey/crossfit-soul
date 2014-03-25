@@ -67,3 +67,29 @@ h5 {
 .gold {
 	color: #ffd700;
 }
+
+/* Media Queries */
+
+@media all and (max-width: 767px) {
+	.huge {
+		margin-top: 20px;
+		margin-right: 8%;
+		font-size: 18em;
+		font-size: 18vw;	
+	}
+	#judges h4 {
+		font-size: 4em;
+		font-size: 4vw;
+	}
+	#contestant {
+		margin-top: 10px;
+		position: relative;
+	}
+	#contestant > div {
+		float: none !important;
+	}
+	#contestant h5 {
+		font-size: 4em;
+		font-size: 4vw;
+	}
+}
