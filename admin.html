@@ -74,41 +74,44 @@
             </div>
             <hr/>
             <div class="form-group">
-                <label for="judge01" class="col-sm-2 control-label">Judge One</label>
+                <label class="col-sm-2 control-label">Judge One</label>
 
                 <div class="col-sm-10">
-                    <button id="judge01" type="button" class="btn btn-primary" ng-model="lift.judge01"
-                            btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-                        {{(lift.judge01) ? 'Accepted' : 'Rejected'}}
-                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge01" btn-radio="'starting'">Starting</button>
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge01" btn-radio="'approved'">Approved</button>
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge01" btn-radio="'rejected'">Rejected</button>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="judge02" class="col-sm-2 control-label">Judge Two</label>
+                <label class="col-sm-2 control-label">Judge Two</label>
 
                 <div class="col-sm-10">
-                    <button id="judge02" type="button" class="btn btn-primary" ng-model="lift.judge02"
-                            btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-                        {{(lift.judge02) ? 'Accepted' : 'Rejected'}}
-                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge02" btn-radio="'starting'">Starting</button>
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge02" btn-radio="'approved'">Approved</button>
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge02" btn-radio="'rejected'">Rejected</button>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="judge03" class="col-sm-2 control-label">Judge Three</label>
+                <label class="col-sm-2 control-label">Judge Three</label>
 
                 <div class="col-sm-10">
-                    <button id="judge03" type="button" class="btn btn-primary" ng-model="lift.judge03"
-                            btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-                        {{(lift.judge03) ? 'Accepted' : 'Rejected'}}
-                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge03" btn-radio="'starting'">Starting</button>
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge03" btn-radio="'approved'">Approved</button>
+                        <button type="button" class="btn btn-primary" ng-model="lift.judge03" btn-radio="'rejected'">Rejected</button>
+                    </div>
                 </div>
             </div>
             <hr/>
             <div class="form-group">
                 <label for="athlete" class="col-sm-2 control-label">Athlete</label>
-
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="athlete" placeholder="Athlete" ng-model="lift.athlete">
+                    <input type="text" id="athlete" placeholder="Athlete" class="form-control"
+                           ng-model="lift.athlete" typeahead="athlete as athlete.athlete for athlete in athletes | filter:$viewValue | limitTo:8">
                 </div>
             </div>
             <div class="form-group">

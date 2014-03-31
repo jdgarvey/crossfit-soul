@@ -2,7 +2,7 @@ var app = angular.module('olyLift', ['firebase', 'ui.bootstrap']);
 
 app.constant('FIREBASE_URI', 'https://olylift.firebaseio.com/');
 
-app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService) {
+app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService, AthletesService) {
     $scope.judges = [
         {name:'Judge One', value:'judge01'},
         {name:'Judge Two', value:'judge02'},
@@ -11,9 +11,33 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
 
     $scope.judge = $scope.judges[0];
 
+    $scope.getAthletes = function () {
+        $scope.athletes = AthletesService.getAthletes();
+    };
+
+    $scope.$on('athletesLoaded', $scope.getAthletes);
+
     $scope.approveLift = function (judge, approved) {
         $scope.lift[judge.value] = approved;
         $scope.updateLift();
+    };
+
+    $scope.getJudgeIcon = function (judge) {
+        var icon = 'images/judge-start.svg';
+
+        switch(judge) {
+            case 'starting':
+                icon = 'images/judge-start.svg';
+                break;
+            case 'approved':
+                icon = 'images/judge-approve.svg';
+                break;
+            case 'rejected':
+                icon = 'images/judge-reject.svg';
+                break;
+        }
+
+        return icon;
     };
 
     $scope.convertLBStoKG = function (lbs) {
@@ -63,6 +87,29 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
         $scope.lift = LiftService.getLift();
         $scope.timer = TimerService.getTimer();
     });
+});
+
+
+app.factory('AthletesService', function ($rootScope, $firebase, FIREBASE_URI) {
+    var athletes = [];
+    var athletesCollection = $firebase(new Firebase(FIREBASE_URI + 'athletes'));
+
+    // Little bit of hoop jumping to make this collection work with ui-bootstrap lookahead
+    athletesCollection.$on('loaded', function(){
+        var keys = athletesCollection.$getIndex();
+        keys.forEach(function(key, i) {
+            athletes.push(athletesCollection[key]);
+        });
+        $rootScope.$broadcast('athletesLoaded');
+    });
+
+    var getAthletes = function() {
+        return athletes;
+    };
+
+    return {
+        getAthletes: getAthletes
+    }
 });
 
 app.factory('TimerService', function ($rootScope, $timeout, $firebase, FIREBASE_URI) {
