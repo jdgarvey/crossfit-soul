@@ -1,0 +1,7 @@
+<h1>{{blogger}}</h1>
+<form class="form" role="form" ng-submit="addComment()">
+    <div class="form-group">
+        <input type="text" class="form-control input-block-level" ng-model="newComment" placeholder="Enter Comment">
+    </div>
+</form>
+<p ng-repeat="(id, comment) in comments">{{comment}}</p>

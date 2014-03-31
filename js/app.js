@@ -74,12 +74,14 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
 
     $scope.getRemainingMinutes = function (time) {
         var minutes = Math.floor(time / 60);
+
         return padNumber(minutes, 2);
     };
 
     $scope.getRemainingSeconds = function (time) {
         var minutes = Math.floor(time / 60);
         var seconds = time - minutes * 60;
+
         return padNumber(seconds, 2);
     };
 
@@ -89,6 +91,76 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
     });
 });
 
+app.controller('LiveBlogCtrl', function($scope, TimerService){
+    var padNumber = function (nr, n, str) {
+        return Array(n - String(nr).length + 1).join(str || '0') + nr;
+    };
+
+    $scope.getRemainingMinutes = function (time) {
+        var minutes = Math.floor(time / 60);
+
+        return padNumber(minutes, 2);
+    };
+
+    $scope.getRemainingSeconds = function (time) {
+        var minutes = Math.floor(time / 60);
+        var seconds = time - minutes * 60;
+
+        return padNumber(seconds, 2);
+    };
+
+    $scope.timer = TimerService.getTimer();
+});
+
+app.directive('liveBlog', function($firebase, FIREBASE_URI){
+    var linker = function(scope, elem, attrs) {
+        scope.blogger = attrs['blogger'];
+        scope.getComments();
+    };
+
+    var controller = function($scope) {
+        $scope.newComment = '';
+
+        $scope.getComments = function () {
+            $scope.comments = $firebase(new Firebase(FIREBASE_URI + 'liveblog/' + $scope.blogger));
+        };
+    };
+
+    return {
+        controller: controller,
+        link: linker,
+        scope: true,
+        templateUrl: 'liveblog.tpl.html'
+    }
+});
+
+app.directive('liveBlogAdmin', function($firebase, FIREBASE_URI){
+    var linker = function(scope, elem, attrs) {
+        scope.blogger = attrs['blogger'];
+        scope.getComments();
+    };
+
+    var controller = function($scope) {
+        $scope.newComment = '';
+        
+        $scope.getComments = function () {
+            $scope.comments = $firebase(new Firebase(FIREBASE_URI + 'liveblog/' + $scope.blogger));
+        };
+
+        $scope.addComment = function(){
+            $scope.comments.$add($scope.newComment);
+            $scope.newComment = '';
+        };
+    };
+
+    return {
+        controller: controller,
+        link: linker,
+        scope: true,
+        templateUrl: 'liveblog-admin.tpl.html'
+
+    }
+});
 
 app.factory('AthletesService', function ($rootScope, $firebase, FIREBASE_URI) {
     var athletes = [];

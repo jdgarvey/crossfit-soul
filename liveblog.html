@@ -20,48 +20,16 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body ng-cloak ng-controller="MainCtrl">
-        <div id="board" class="container-fluid content" style="display: none">
+    <body ng-cloak ng-controller="LiveBlogCtrl">
+        <div id="liveblog" class="container-fluid content" style="display: none">
             <div class="row">
-                <div class="col-xs-5 text-center">
-                    <div class="col-sm-7">
-                        <h1>WEIGHT</h1>
-                    
-                        <h1 class="header-margin">{{convertLBStoKG(lift.weight)}} KGS</h1>
-                    
-                        <h1 class="header-margin">{{lift.weight}} LBS</h1>
-                    </div>
-                </div>
-                <div class="col-xs-7 text-center">
+                <div id="board" class="col-xs-12 board">
                     <h1 class="huge header-line-height">{{getRemainingMinutes(timer.time)}}&#58;{{getRemainingSeconds(timer.time)}}</h1>
-
-                    <h3 class="gold header-margin">ATTEMPT {{lift.attempt}}</h3>
-
-                    <h3 class="header-margin header-line-height">{{lift.movement}}</h3>
                 </div>
             </div>
             <div id="bottom-row" class="row">
-                <div id="judges" class="col-sm-6 text-center">
-                    <div class="col-xs-4">
-                        <img ng-src="{{getJudgeIcon(lift.judge01)}}">
-                        <h4>JUDGE 1</h4>
-                    </div>
-                    <div class="col-xs-4">
-                        <img ng-src="{{getJudgeIcon(lift.judge02)}}">
-                        <h4>JUDGE 2</h4>
-                    </div>
-                    <div class="col-xs-4">
-                        <img ng-src="{{getJudgeIcon(lift.judge03)}}">
-                        <h4>JUDGE 3</h4>
-                    </div>
-                </div>
-                <div id="contestant" class="col-sm-6 col-xs-12">
-                    <div class="col-sm-6 text-center pull-right">
-                        <h5>{{lift.athlete.athlete}}</h5>
-                        <h5 class="gold">{{lift.division}}</h5>
-                        <h5>{{lift.affiliate}}</h5>
-                    </div>
-                </div>
+                <div live-blog blogger="one" class="col-sm-6"></div>
+                <div live-blog blogger="two" class="col-sm-6 col-xs-12"></div>
             </div>
         </div>
 
@@ -76,7 +44,7 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#board').css('display', 'block');
+                $('#liveblog').css('display', 'block');
             });
         </script>
 
