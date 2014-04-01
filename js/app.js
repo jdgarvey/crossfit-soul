@@ -40,8 +40,12 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
         return icon;
     };
 
-    $scope.convertLBStoKG = function (lbs) {
-        return Math.floor(lbs * 0.453592);
+    $scope.convertKGtoLBS = function (kg) {
+        var nearExact = kg/0.45359237;
+        var lbs = Math.floor(nearExact);
+        // var oz = (nearExact - lbs) * 16;
+
+        return lbs;
     };
 
     $scope.updateLift = function () {
