@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/fonts.css" type="text/css" charset="utf-8"/>
         <link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
 
-        <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+        <link rel='shortcut icon' type='image/x-icon' href='favicon.ico'/>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,9 +23,14 @@
     <body ng-cloak ng-controller="LiveBlogCtrl">
         <div id="liveblog" class="container-fluid content" style="display: none">
             <div class="row">
-                <div id="board" class="col-xs-12 board">
-                    <h1 class="huge header-line-height">{{getRemainingMinutes(timer.time)}}&#58;{{getRemainingSeconds(timer.time)}}</h1>
-                </div>
+                <form class="form-inline" role="form" novalidate ng-submit="updateTimer()">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="timer" placeholder="Timer" ng-model="timer.time" ng-blur="updateTimer()">
+                        <button type="button" class="btn btn-primary" ng-click="toggleTimer()">{{isPaused() ? 'Start' : 'Stop'}}</button>
+                        <button type="button" class="btn btn-primary" ng-click="toggleCountDirection()">{{isCountingUp() ? 'Count Down' : 'Count Up'}}</button>
+                    </div>
+                    <hr/>
+                </form>
             </div>
             <div id="bottom-row" class="row">
                 <div live-blog-admin blogger="one" class="col-sm-6"></div>
@@ -40,7 +45,7 @@
         <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.js"></script>
         <script src="libs/ui-bootstrap-tpls-0.10.0.min.js"></script>
 
-        <script src="js/app.js"></script>
+        <script src="js/liveblog.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function () {
