@@ -60,6 +60,11 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
         return TimerService.isTimerPaused();
     };
 
+    $scope.addTime = function (time) {
+        $scope.timer.time += time;
+        TimerService.updateTimer();
+    };
+    
     $scope.startTimer = function () {
         TimerService.start();
     };

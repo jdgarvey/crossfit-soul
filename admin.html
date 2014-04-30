@@ -34,9 +34,13 @@
             <div class="form-group">
                 <label for="timer" class="col-sm-2 control-label">Timer</label>
 
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <input type="text" class="form-control" id="timer" placeholder="Timer" ng-model="timer.time" ng-blur="updateTimer()">
-                    <button type="button" class="btn btn-primary" ng-click="toggleTimer()">{{isPaused() ? 'Start' : 'Stop'}}</button>
+                    <button type="button" class="btn btn-primary" ng-click="increment()">{{isPaused() ? 'Start' : 'Stop'}}</button>
+                    <button type="button" class="btn btn-primary" ng-click="addTime(60)">1 min</button>
+                    <button type="button" class="btn btn-primary" ng-click="addTime(120)">2 mins</button>
+                    <button type="button" class="btn btn-primary" ng-click="addTime(180)">3 mins</button>
+                    <button type="button" class="btn btn-primary" ng-click="addTime(240)">4 mins</button>
                 </div>
             </div>
             <hr/>
