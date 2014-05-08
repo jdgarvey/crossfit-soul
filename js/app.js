@@ -60,8 +60,16 @@ app.controller('MainCtrl', function ($scope, $timeout, LiftService, TimerService
         return TimerService.isTimerPaused();
     };
 
-    $scope.addTime = function (time) {
-        $scope.timer.time += time;
+    $scope.resetJudges = function () {
+        $scope.lift.judge01 = 'starting';
+        $scope.lift.judge02 = 'starting';
+        $scope.lift.judge03 = 'starting';
+
+        LiftService.updateLift();
+    };
+    
+    $scope.setTime = function (time) {
+        $scope.timer.time = parseInt(time, 10);
         TimerService.updateTimer();
     };
     
@@ -237,6 +245,27 @@ app.factory('TimerService', function ($rootScope, $timeout, $firebase, FIREBASE_
         isTimerPaused: isTimerPaused
     }
 });
+
+app.directive('ding', function(TimerService){
+    var linker = function(scope, elem, attrs) {
+        var audio = elem[0];
+
+        scope.$on('liftLoaded', function () {
+            scope.timer = TimerService.getTimer();
+
+            scope.timer.$on('change', function(){
+                if(scope.timer.time == 30) {
+                    audio.load();
+                    audio.play();
+                }
+            });
+        });
+    }
+    
+    return {
+        link: linker
+    }
+})
 
 app.factory('LiftService', function ($rootScope, $firebase, FIREBASE_URI) {
     var lift = $firebase(new Firebase(FIREBASE_URI + 'lift'));
